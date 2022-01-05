@@ -37,7 +37,7 @@ function App(props: AppProps) {
   }
 
   return (
-    <Router>
+    <Router basename="/NFTBooth">
       <div className="App">
         <Navbar>
         <Navbar.Group align={Alignment.LEFT}>
