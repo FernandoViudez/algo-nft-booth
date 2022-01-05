@@ -44,8 +44,8 @@ function App(props: AppProps) {
         <Navbar.Group align={Alignment.LEFT}>
           <Navbar.Heading>Algorand NFT Minter</Navbar.Heading>
           <Navbar.Divider />
-          <AnchorButton minimal={true} icon='search' href='/' text='Choose' />
-          <AnchorButton minimal={true} icon='upload' href='/upload' text='Upload' />
+          <AnchorButton minimal={true} icon='search' href={basename+'/'} text='Choose' />
+          <AnchorButton minimal={true} icon='upload' href={basename+'/upload'} text='Upload' />
         </Navbar.Group>
         <Navbar.Group  align={Alignment.RIGHT}>
           <AlgorandWalletConnector  

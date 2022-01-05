@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/NFTBooth/static/css/main.7f77b42f.chunk.css",
-    "main.js": "/NFTBooth/static/js/main.351e521a.chunk.js",
-    "main.js.map": "/NFTBooth/static/js/main.351e521a.chunk.js.map",
+    "main.js": "/NFTBooth/static/js/main.542ff73a.chunk.js",
+    "main.js.map": "/NFTBooth/static/js/main.542ff73a.chunk.js.map",
     "runtime-main.js": "/NFTBooth/static/js/runtime-main.b031ea55.js",
     "runtime-main.js.map": "/NFTBooth/static/js/runtime-main.b031ea55.js.map",
     "static/js/2.8233a626.chunk.js": "/NFTBooth/static/js/2.8233a626.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.b031ea55.js",
     "static/js/2.8233a626.chunk.js",
     "static/css/main.7f77b42f.chunk.css",
-    "static/js/main.351e521a.chunk.js"
+    "static/js/main.542ff73a.chunk.js"
   ]
 }
