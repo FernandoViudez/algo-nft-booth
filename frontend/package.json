@@ -27,7 +27,7 @@
     "start": "HTTPS=true PORT=8080 react-scripts start",
     "build": "react-scripts build && rm -r ../static && mv build/* ../"
   },
-  "homepage": "https://algorand-devrel.github.io/NFTBooth",
+  "homepage": ".",
   "eslintConfig": {
     "extends": [
       "react-app"

@@ -1,6 +1,6 @@
 import Picker from './Picker'
 import './index.css';
-import { AnchorButton, Alignment, Navbar } from '@blueprintjs/core';
+import { Button, Alignment, Navbar } from '@blueprintjs/core';
 import { SessionWallet } from 'algorand-session-wallet';
 import {Uploader} from './Uploader'
 import React from 'react';
@@ -9,7 +9,8 @@ import AlgorandWalletConnector from './AlgorandWalletConnector'
 import { conf, sessionGetActiveConf } from './lib/config';
 
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
+  Link,
   Switch,
   Route,
 } from 'react-router-dom'
@@ -44,8 +45,8 @@ function App(props: AppProps) {
         <Navbar.Group align={Alignment.LEFT}>
           <Navbar.Heading>Algorand NFT Minter</Navbar.Heading>
           <Navbar.Divider />
-          <AnchorButton minimal={true} icon='search' href={basename+'/'} text='Choose' />
-          <AnchorButton minimal={true} icon='upload' href={basename+'/upload'} text='Upload' />
+          <Link to='/'><Button minimal={true} icon='search'>Choose</Button></Link>
+          <Link to='/upload'><Button minimal={true} icon='upload'>Upload</Button></Link>
         </Navbar.Group>
         <Navbar.Group  align={Alignment.RIGHT}>
           <AlgorandWalletConnector  
