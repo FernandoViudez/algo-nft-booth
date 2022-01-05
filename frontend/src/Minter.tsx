@@ -97,7 +97,7 @@ interface NFTCardProps {
 function NFTCard(props: NFTCardProps) {
     return (
         <Card elevation={Elevation.THREE} >
-            <img src={resolveProtocol(0, props.md.image)} alt='nft'></img>
+            <img src={resolveProtocol(0, props.md.image)} style={{maxWidth: "500px"}}alt='nft'></img>
             <div className='container'>
                 <Button loading={props.loading} intent='primary' onClick={props.mintOnly}>I have an account</Button>
                 <Button loading={props.loading} intent='success' onClick={props.mintAndCreate}>Make me an account</Button>
