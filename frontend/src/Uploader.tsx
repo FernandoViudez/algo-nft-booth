@@ -36,9 +36,9 @@ export function Uploader(props: UploaderProps) {
     async function uploadImage() {
         setLoading(true) 
         const md = new Metadata({
-            name: "DRL NFT",
+            name: "DRL Pilot NFTs",
             unitName:"drl-nft",
-            description:"NFT Minted at DRL race 1/5/22",
+            description:"NFT Minted at DRL race in Las Vegas 1/5/22",
             decimals: 0,
         }) 
 
