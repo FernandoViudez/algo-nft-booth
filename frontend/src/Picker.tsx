@@ -1,5 +1,6 @@
 import { Card, Elevation } from "@blueprintjs/core";
 
+import {Link} from 'react-router-dom'
 import React from "react";
 import { Metadata } from "./lib/metadata";
 import { resolveProtocol } from "./lib/nft";
@@ -74,9 +75,9 @@ function DisplayCard(props: DisplayCardProps) {
       className="content-collection-item"
       elevation={Elevation.TWO}
     >
-        <a href={'/mint/'+props.cidmd.cid}>
+        <Link to={'/mint/'+props.cidmd.cid}>
             <img src={resolveProtocol(0, props.cidmd.md.image)} alt="nft" />
-        </a>
+        </Link>
 
     </Card>
   );
