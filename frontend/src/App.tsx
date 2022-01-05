@@ -35,9 +35,10 @@ function App(props: AppProps) {
     setAccounts(sw.accountList())
     setConnected(sw.connected())
   }
+  const basename = document.querySelector('base')?.getAttribute('href') ?? '/'    
 
   return (
-    <Router basename="/NFTBooth">
+    <Router basename={basename}>
       <div className="App">
         <Navbar>
         <Navbar.Group align={Alignment.LEFT}>
