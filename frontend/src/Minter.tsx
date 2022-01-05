@@ -25,6 +25,7 @@ export function Minter(props: MinterProps){
     const [importingAccount, setImportingAccount] = React.useState(undefined)
     const [scanningAccount, setScanningAccount] = React.useState(undefined)
     const [nft, setNFT] = React.useState(undefined)
+    const [loading, setLoading] = React.useState(false)
 
     React.useEffect(()=>{
         if(md._raw === undefined)
@@ -35,6 +36,7 @@ export function Minter(props: MinterProps){
 
     async function mintOnly(){
         // Create ASA with our user
+        setLoading(true)
         const result = await NFT.create(props.sw.wallet, props.activeConfig,  md, cid)
         setNFT(result)
         setScanningAccount(result.id())
@@ -44,15 +46,20 @@ export function Minter(props: MinterProps){
         setScanningAccount(undefined)
         //Scan their qr
         await xferAsset(props.sw.wallet, props.activeConfig, addr, nft.id())
+        setLoading(false)
     }
 
     async function mintAndCreate(){
         // Create account
+        setLoading(true)
         const acct = algosdk.generateAccount()
         setImportingAccount(acct)
     }
 
-    function cancelCreate() { setImportingAccount(undefined) }
+    function cancelCreate() { 
+        setLoading(false)
+        setImportingAccount(undefined) 
+    }
 
     async function continueCreate() {
         // Create ASA
@@ -64,13 +71,15 @@ export function Minter(props: MinterProps){
         // Unset
         setImportingAccount(undefined)
 
+        setLoading(false)
+
         // Nav back to main
-        window.location.href = "/"
+        window.location.href = "/NFTBooth/"
     }
 
     return (
         <div className='container'>
-            <NFTCard cid={cid} md={md} mintOnly={mintOnly} mintAndCreate={mintAndCreate}></NFTCard>
+            <NFTCard loading={loading} cid={cid} md={md} mintOnly={mintOnly} mintAndCreate={mintAndCreate}></NFTCard>
             <AccountImporter importingAccount={importingAccount} cancelCreate={cancelCreate} continueCreate={continueCreate}/>
             <AddressReader  optIn={scanningAccount} handleScanned={handleScannedAccount}></AddressReader>
         </div>
@@ -80,6 +89,7 @@ export function Minter(props: MinterProps){
 interface NFTCardProps {
     cid: string
     md: Metadata
+    loading: boolean
     mintOnly()
     mintAndCreate()
 }
@@ -89,8 +99,8 @@ function NFTCard(props: NFTCardProps) {
         <Card elevation={Elevation.THREE} >
             <img src={resolveProtocol(0, props.md.image)} alt='nft'></img>
             <div className='container'>
-                <Button intent='primary' onClick={props.mintOnly}>I have an account</Button>
-                <Button intent='success' onClick={props.mintAndCreate}>Make me an account</Button>
+                <Button loading={props.loading} intent='primary' onClick={props.mintOnly}>I have an account</Button>
+                <Button loading={props.loading} intent='success' onClick={props.mintAndCreate}>Make me an account</Button>
             </div>
         </Card>
     )
