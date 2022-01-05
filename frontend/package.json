@@ -25,9 +25,9 @@
   },
   "scripts": {
     "start": "HTTPS=true PORT=8080 react-scripts start",
-     "build": "react-scripts build && rm -r ../static && mv build/* ../"
-
+    "build": "react-scripts build && rm -r ../static && mv build/* ../"
   },
+  "homepage": ".",
   "eslintConfig": {
     "extends": [
       "react-app"
