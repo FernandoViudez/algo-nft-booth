@@ -11,7 +11,7 @@ import QRCode from "react-qr-code";
 import algosdk, {secretKeyToMnemonic } from 'algosdk'
 import { DIALOG_BODY, DIALOG_FOOTER } from '@blueprintjs/core/lib/esm/common/classes'
 
-QrScanner.WORKER_PATH = "/js/qr-scanner-worker.min.js"
+QrScanner.WORKER_PATH = "/qr-scanner-worker.min.js"
 
 export type MinterProps = {
     activeConfig: number 
@@ -29,7 +29,6 @@ export function Minter(props: MinterProps){
     React.useEffect(()=>{
         if(md._raw === undefined)
             getMetaFromIpfs(getIpfsUrlFromCID(props.activeConfig, cid)).then((md)=>{
-                console.log(md)
                 setMd(md)
             })
     }, [props.activeConfig, cid, md])
@@ -42,7 +41,6 @@ export function Minter(props: MinterProps){
     }
 
     async function handleScannedAccount(addr: string){
-        console.log("Got address: "+addr)
         setScanningAccount(undefined)
         //Scan their qr
         await xferAsset(props.sw.wallet, props.activeConfig, addr, nft.id())
@@ -87,7 +85,6 @@ interface NFTCardProps {
 }
 
 function NFTCard(props: NFTCardProps) {
-    console.log(props)
     return (
         <Card elevation={Elevation.THREE} >
             <img src={resolveProtocol(0, props.md.image)} alt='nft'></img>

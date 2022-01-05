@@ -41,7 +41,7 @@ function App(props: AppProps) {
       <div className="App">
         <Navbar>
         <Navbar.Group align={Alignment.LEFT}>
-          <Navbar.Heading>DRL NFT Minting Booth</Navbar.Heading>
+          <Navbar.Heading>Algorand NFT Minter</Navbar.Heading>
           <Navbar.Divider />
           <AnchorButton minimal={true} icon='search' href='/' text='Choose' />
           <AnchorButton minimal={true} icon='upload' href='/upload' text='Upload' />

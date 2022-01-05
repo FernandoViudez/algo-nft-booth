@@ -49,7 +49,7 @@ export default function Picker(props: PickerProps) {
   }, [props.activeConfig, initialized]);
 
   const cards = options.map((option) => {
-    return <DisplayCard cidmd={option} />;
+    return <DisplayCard key={option.cid} cidmd={option} />;
   });
 
   return (
@@ -69,10 +69,8 @@ type DisplayCardProps = {
 };
 
 function DisplayCard(props: DisplayCardProps) {
-  console.log(props);
   return (
     <Card
-      key={props.cidmd.md.image}
       className="content-collection-item"
       elevation={Elevation.TWO}
     >
