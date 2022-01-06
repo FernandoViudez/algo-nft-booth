@@ -25,7 +25,9 @@ export function Minter(props: MinterProps){
     const [importingAccount, setImportingAccount] = React.useState(undefined)
     const [scanningAccount, setScanningAccount] = React.useState(undefined)
     const [nft, setNFT] = React.useState(undefined)
+    const [fundLoading, setFundLoading] = React.useState(false)
     const [loading, setLoading] = React.useState(false)
+    const [popupOpen,setPopupOpen] = React.useState(false)
 
     React.useEffect(()=>{
         if(md._raw === undefined)
@@ -64,17 +66,20 @@ export function Minter(props: MinterProps){
     async function continueCreate() {
         // Create ASA
         const result = await NFT.create(props.sw.wallet, props.activeConfig,  md, cid)
+        setNFT(result)
+        setPopupOpen(true)
 
+
+    }
+
+    async function fundIt(){
         // User has scanned it, issue grouped transactions
-        await fundAccount(props.sw.wallet, props.activeConfig, importingAccount, result.id())
-
+        setFundLoading(true)
+        await fundAccount(props.sw.wallet, props.activeConfig, importingAccount, nft.id())
         // Unset
         setImportingAccount(undefined)
-
         setLoading(false)
-
-        // Nav back to main
-        window.location.href = "/NFTBooth/"
+        window.location.href="/NFTBooth"
     }
 
     return (
@@ -82,6 +87,13 @@ export function Minter(props: MinterProps){
             <NFTCard loading={loading} cid={cid} md={md} mintOnly={mintOnly} mintAndCreate={mintAndCreate}></NFTCard>
             <AccountImporter importingAccount={importingAccount} cancelCreate={cancelCreate} continueCreate={continueCreate}/>
             <AddressReader  optIn={scanningAccount} handleScanned={handleScannedAccount}></AddressReader>
+            <Dialog isOpen={popupOpen} >
+                <div className={DIALOG_BODY}>
+                    <div className='container'>
+                        <Button loading={fundLoading} intent='success' onClick={fundIt}>Fund it!</Button>
+                    </div>
+                </div>
+            </Dialog>
         </div>
     )
 }
