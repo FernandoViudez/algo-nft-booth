@@ -20,7 +20,7 @@ export async function createToken(
   md: Metadata
 ): Promise<number> {
   const addr = wallet.getDefaultAccount();
-  const suggested = await getSuggested(activeConf, 100);
+  const suggested = await getSuggested(activeConf, 1000);
 
   const create_txn = makeAssetCreateTxnWithSuggestedParamsFromObject({
     from: addr,
