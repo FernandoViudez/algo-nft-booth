@@ -40,8 +40,10 @@ export function Minter(props: MinterProps){
         // Create ASA with our user
         setLoading(true)
         const result = await NFT.create(props.sw.wallet, props.activeConfig,  md, cid)
-        setNFT(result)
-        setScanningAccount(result.id())
+        //setNFT(result)
+        // eslint-disable-next-line no-restricted-globals
+        confirm("Please Opt into: "+result.id())
+        //setScanningAccount(result.id())
     }
 
     async function handleScannedAccount(addr: string){
@@ -68,7 +70,6 @@ export function Minter(props: MinterProps){
         const result = await NFT.create(props.sw.wallet, props.activeConfig,  md, cid)
         setNFT(result)
         setPopupOpen(true)
-
 
     }
 
