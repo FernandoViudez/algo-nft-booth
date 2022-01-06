@@ -52,7 +52,7 @@ export async function fundAccount(
   const fund_txn = makePaymentTxnWithSuggestedParamsFromObject({
     from: addr,
     to: acct.addr,
-    amount: 3e6,
+    amount: 3e5,
     suggestedParams: suggested,
   });
 
