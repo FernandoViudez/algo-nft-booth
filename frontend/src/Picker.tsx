@@ -17,7 +17,7 @@ type PickerProps = {
 };
 
 // 4 hours
-const MAX_DELTA = 60 * 60 * 4 * 1000;
+const MAX_DELTA = 60 * 60 * 2 * 1000;
 
 export default function Picker(props: PickerProps) {
   const [options, setOptions] = React.useState([]);
@@ -27,7 +27,7 @@ export default function Picker(props: PickerProps) {
   React.useEffect(() => {
     if (initialized) return;
     listRecentFiles(props.activeConfig, MAX_DELTA).then((opts) => {
-      opts = opts.splice(0, 5);
+      opts = opts.splice(0, 50);
       const md_promises = [];
       for (const idx in opts) {
         const opt = opts[idx];
