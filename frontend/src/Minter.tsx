@@ -76,9 +76,11 @@ export function Minter(props: MinterProps){
     async function fundIt(){
         // User has scanned it, issue grouped transactions
         setFundLoading(true)
+        
         await fundAccount(props.sw.wallet, props.activeConfig, importingAccount, nft.id())
         // Unset
         setImportingAccount(undefined)
+        setFundLoading(false)
         setLoading(false)
         window.location.href="/NFTBooth"
     }
