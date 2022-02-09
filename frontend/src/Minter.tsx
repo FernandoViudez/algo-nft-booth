@@ -23,11 +23,12 @@ export function Minter(props: MinterProps){
     const {cid} = useParams()
     const [md, setMd] = React.useState(new Metadata({}))
     const [importingAccount, setImportingAccount] = React.useState(undefined)
-    const [scanningAccount, setScanningAccount] = React.useState(undefined)
     const [nft, setNFT] = React.useState(undefined)
     const [fundLoading, setFundLoading] = React.useState(false)
     const [loading, setLoading] = React.useState(false)
     const [popupOpen,setPopupOpen] = React.useState(false)
+
+    const [createdId, setCreatedId] = React.useState(0)
 
     React.useEffect(()=>{
         if(md._raw === undefined)
@@ -40,16 +41,15 @@ export function Minter(props: MinterProps){
         // Create ASA with our user
         setLoading(true)
         const result = await NFT.create(props.sw.wallet, props.activeConfig,  md, cid)
-        //setNFT(result)
-        // eslint-disable-next-line no-restricted-globals
-        confirm("Please Opt into: "+result.id())
-        //setScanningAccount(result.id())
+        setNFT(result)
+        setCreatedId(result.id())
     }
 
     async function handleScannedAccount(addr: string){
-        setScanningAccount(undefined)
-        //Scan their qr
-        await xferAsset(props.sw.wallet, props.activeConfig, addr, nft.id())
+        // Fires after successful scan of addr
+        await xferAsset(props.sw.wallet, props.activeConfig, addr, createdId)
+
+        setCreatedId(0)
         setLoading(false)
     }
 
@@ -70,7 +70,6 @@ export function Minter(props: MinterProps){
         const result = await NFT.create(props.sw.wallet, props.activeConfig,  md, cid)
         setNFT(result)
         setPopupOpen(true)
-
     }
 
     async function fundIt(){
@@ -89,7 +88,7 @@ export function Minter(props: MinterProps){
         <div className='container'>
             <NFTCard loading={loading} cid={cid} md={md} mintOnly={mintOnly} mintAndCreate={mintAndCreate}></NFTCard>
             <AccountImporter importingAccount={importingAccount} cancelCreate={cancelCreate} continueCreate={continueCreate}/>
-            <AddressReader  optIn={scanningAccount} handleScanned={handleScannedAccount}></AddressReader>
+            <AddressReader  optIn={createdId} handleScanned={handleScannedAccount}></AddressReader>
             <Dialog isOpen={popupOpen} >
                 <div className={DIALOG_BODY}>
                     <div className='container'>
