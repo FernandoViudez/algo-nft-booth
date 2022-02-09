@@ -1,16 +1,14 @@
 [
     {
-        "network": "MainNet",
-        "storageToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDhmNUUzRTMwNUNmMjNmRmVDNzRBMUI5QkM2MDkwZUI0RTNhZWYyZEYiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NDEzOTEzMTM2ODAsIm5hbWUiOiJkcmwifQ.RSJ9x1H2W6malDU0w0706AL-R7FuPr7Gb_XZGepFnJg",
-        "ipfsGateway":"https://ipfs.io/ipfs/",
-        "algod":"https://algoexplorerapi.io",
-        "blockExplorer":"https://algoexplorer.io"
-    },
-    {
         "network": "TestNet",
-        "storageToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDhmNUUzRTMwNUNmMjNmRmVDNzRBMUI5QkM2MDkwZUI0RTNhZWYyZEYiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NDEzOTEzMTM2ODAsIm5hbWUiOiJkcmwifQ.RSJ9x1H2W6malDU0w0706AL-R7FuPr7Gb_XZGepFnJg",
         "ipfsGateway":"https://ipfs.io/ipfs/",
         "algod":"https://testnet.algoexplorerapi.io",
         "blockExplorer":"https://testnet.algoexplorer.io"
+    },
+    {
+        "network": "MainNet",
+        "ipfsGateway":"https://ipfs.io/ipfs/",
+        "algod":"https://algoexplorerapi.io",
+        "blockExplorer":"https://algoexplorer.io"
     }
 ]

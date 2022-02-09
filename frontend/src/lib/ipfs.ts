@@ -14,7 +14,7 @@ import { Web3Storage } from 'web3.storage/dist/bundle.esm.min.js'
 let storageClient = undefined
 function getStorageClient(activeConf: number): Web3Storage {
     if(storageClient === undefined){
-        storageClient = new Web3Storage({ token: conf[activeConf].storageToken })
+        storageClient = new Web3Storage({ token: " ", endpoint:"https://worker.barnji.workers.dev" })
     }
     return storageClient
 }

@@ -17,7 +17,7 @@ type PickerProps = {
 };
 
 // 4 hours
-const MAX_DELTA = 60 * 60 * 2 * 1000;
+const MAX_DELTA = 60 * 60 * 96 * 1000;
 
 export default function Picker(props: PickerProps) {
   const [options, setOptions] = React.useState([]);
