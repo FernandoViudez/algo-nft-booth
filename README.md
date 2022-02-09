@@ -11,6 +11,9 @@ If the user already has a funded mobile wallet account, we open a modal to let t
 If the user does _not_ already have a funded mobile wallet account, we create one and seed it and transfer the ASA then present a QR code to allow them to import the account it was sent to directly to their wallet.
 
 ## TODO
-"Already have account" scanner fixes or have them init a wc session to app
+
+"Already have account" scanner fix
+
 Directions to rekey account if we create for them 
+
 Email or share to user
