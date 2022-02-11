@@ -26,6 +26,7 @@ export default function Picker(props: PickerProps) {
   // Look at recent
   React.useEffect(() => {
     if (initialized) return;
+
     listRecentFiles(props.activeConfig, MAX_DELTA).then((opts) => {
       opts = opts.splice(0, 50);
       const md_promises = [];

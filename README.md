@@ -12,8 +12,6 @@ If the user does _not_ already have a funded mobile wallet account, we create on
 
 ## TODO
 
-"Already have account" scanner fix
-
 Directions to rekey account if we create for them 
 
 Email or share to user
