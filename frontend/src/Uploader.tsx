@@ -36,8 +36,8 @@ export function Uploader(props: UploaderProps) {
     async function uploadImage() {
         setLoading(true) 
         const md = new Metadata({
-            name: "ETH Denver",
-            unitName:"eth-algo",
+            name: "ETH Denver AlgoRanch NFT",
+            unitName:"eth-denv",
             description:"NFT Minted ETH Denver 2022",
             decimals: 0,
         }) 
