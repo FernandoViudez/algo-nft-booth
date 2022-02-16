@@ -113,7 +113,7 @@ function NFTCard(props: NFTCardProps) {
         <Card elevation={Elevation.THREE} >
             <img src={resolveProtocol(0, props.md.image)} style={{maxWidth: "500px"}}alt='nft'></img>
             <div className='container'>
-                <Button loading={props.loading} intent='success' onClick={props.mintAndCreate}>Make me an account</Button>
+                <Button loading={props.loading} icon='clean' intent='success' onClick={props.mintAndCreate}>Mint</Button>
             </div>
         </Card>
     )
