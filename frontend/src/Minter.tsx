@@ -113,7 +113,6 @@ function NFTCard(props: NFTCardProps) {
         <Card elevation={Elevation.THREE} >
             <img src={resolveProtocol(0, props.md.image)} style={{maxWidth: "500px"}}alt='nft'></img>
             <div className='container'>
-                <Button loading={props.loading} intent='primary' onClick={props.mintOnly}>I have an account</Button>
                 <Button loading={props.loading} intent='success' onClick={props.mintAndCreate}>Make me an account</Button>
             </div>
         </Card>
@@ -164,8 +163,6 @@ function AccountImporter(props: AccountImporterProps) {
         </Dialog>
     )
 }
-
-
 
 export interface AddressReaderProps {
     optIn: number 

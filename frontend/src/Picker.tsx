@@ -16,8 +16,9 @@ type PickerProps = {
   sw: SessionWallet
 };
 
-// 4 hours
-const MAX_DELTA = 60 * 60 * 96 * 1000;
+// 2 hours
+const MAX_DELTA = 60 * 60 * 4 * 1000;
+
 
 export default function Picker(props: PickerProps) {
   const [options, setOptions] = React.useState([]);
@@ -28,14 +29,14 @@ export default function Picker(props: PickerProps) {
     if (initialized) return;
 
     listRecentFiles(props.activeConfig, MAX_DELTA).then((opts) => {
-      opts = opts.splice(0, 50);
       const md_promises = [];
-      for (const idx in opts) {
-        const opt = opts[idx];
+      for (const opt of opts) {
+        //const opt = opts[idx];
         md_promises.push(
           getMetaFromIpfs(getIpfsUrlFromCID(props.activeConfig, opt.cid))
         );
       }
+
       Promise.all(md_promises).then((arr) => {
         const filtered = [];
         for (const idx in arr) {
@@ -79,7 +80,6 @@ function DisplayCard(props: DisplayCardProps) {
         <Link to={'/mint/'+props.cidmd.cid}>
             <img src={resolveProtocol(0, props.cidmd.md.image)} alt="nft" />
         </Link>
-
     </Card>
   );
 }
