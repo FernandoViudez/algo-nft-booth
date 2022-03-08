@@ -57,9 +57,9 @@ export function Uploader(props: UploaderProps) {
 
         const md = new Metadata({
             ...meta,
-            name: "ETH Denver AlgoRanch NFT",
-            unitName:"eth-denv",
-            description:"NFT Minted ETH Denver 2022",
+            name: "SXSW AlgoRanch NFT",
+            unitName:"sxsw-aus",
+            description:"NFT Minted SXSW 2022",
             decimals: 0,
         }) 
 
