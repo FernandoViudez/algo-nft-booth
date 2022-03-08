@@ -1,9 +1,9 @@
 import React from 'react'
 import { Button, Elevation, FileInput, Card} from "@blueprintjs/core"
-import {Metadata} from './lib/metadata'
+import { getTypeFromMimeType, Metadata} from './lib/metadata'
 import { putToIPFS } from './lib/ipfs'
+import { MediaDisplay } from './MediaDisplay'
 
-//
 type UploaderProps = {
     activeConfig: number
 }
@@ -12,30 +12,51 @@ export function Uploader(props: UploaderProps) {
 
     const [meta, setMeta]               = React.useState(new Metadata())
     const [loading, setLoading]         = React.useState(false)
-    const [imgSrc, setImgSrc]           = React.useState<string>();
     const [fileObj, setFileObj]         = React.useState<File>();
+    const [mediaSrc, setMediaSrc]           = React.useState<string>();
+    const [mimeType, setMimeType]           = React.useState<string>();
 
     function setFile(file: File) {
         setFileObj(file)
 
         const reader = new FileReader();
-        reader.onload = (e: any) => {  setImgSrc(e.target.result) }
+        reader.onload = (e: any) => {  setMediaSrc(e.target.result) }
         reader.readAsDataURL(file);
 
+        setMimeType(file.type)
+
         setMeta((meta)=>{
-            return new Metadata({
+            const metaObj = {
                 ...meta,
-                image: file.name,
-                image_mimetype: file.type,
                 properties:{...meta.properties, size:file.size}
-            })
+            }
+
+            const mediaType = getTypeFromMimeType(file.type)
+            switch(mediaType){
+                case 'audio':
+                    metaObj.animation_url = file.name
+                    metaObj.animation_url_mimetype = file.type
+                    break;
+                case 'video':
+                    metaObj.animation_url = file.name
+                    metaObj.animation_url_mimetype = file.type
+                    break;
+                case 'image':
+                    metaObj.image = file.name
+                    metaObj.image_mimetype = file.type
+                    break;
+            }
+
+            return new Metadata(metaObj)
         })
     }
 
 
-    async function uploadImage() {
+    async function uploadMedia() {
         setLoading(true) 
+
         const md = new Metadata({
+            ...meta,
             name: "ETH Denver AlgoRanch NFT",
             unitName:"eth-denv",
             description:"NFT Minted ETH Denver 2022",
@@ -49,6 +70,7 @@ export function Uploader(props: UploaderProps) {
             setLoading(false)
             window.location.reload()
         } catch (error) {
+            console.error(error)
             alert("Failed to upload image to ipfs :(")
             setLoading(false)
             return
@@ -58,8 +80,8 @@ export function Uploader(props: UploaderProps) {
     return (
         <div className='container'>
             <Card elevation={Elevation.TWO} className='mint-card' >
-                <UploadContainer imgSrc={imgSrc} setFile={setFile} {...meta} />
-                <Button intent='success' style={{float:'right', margin:"15px"}} loading={loading} onClick={uploadImage}>Upload</Button>
+                <UploadContainer mimeType={mimeType} mediaSrc={mediaSrc} setFile={setFile} {...meta} />
+                <Button intent='success' style={{float:'right', margin:"15px"}} loading={loading} onClick={uploadMedia}>Upload</Button>
             </Card>
         </div>
     )
@@ -67,7 +89,8 @@ export function Uploader(props: UploaderProps) {
 }
 
 type UploaderContainerProps = {
-    imgSrc: string | undefined
+    mediaSrc: string | undefined
+    mimeType: string | undefined
     setFile(f: File): void
 };
 
@@ -78,7 +101,7 @@ function UploadContainer(props: UploaderContainerProps) {
         props.setFile(event.target.files.item(0))
     }
 
-    if (props.imgSrc === undefined || props.imgSrc === "" ) return (
+    if (props.mediaSrc === undefined || props.mediaSrc === "" ) return (
         <div className='container'>
             <div className='content content-piece' >
                 <FileInput large={true} disabled={false} text="Choose file..." onInputChange={captureFile} />
@@ -86,11 +109,10 @@ function UploadContainer(props: UploaderContainerProps) {
         </div>
     )
 
-
     return (
         <div className='container' >
             <div className='content content-piece'>
-                <img id="gateway-link" alt="NFT" src={props.imgSrc} />
+                <MediaDisplay mimeType={props.mimeType} mediaSrc={props.mediaSrc} />
             </div>
         </div>
     )

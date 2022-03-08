@@ -1,14 +1,14 @@
 [
     {
-        "network": "MainNet",
-        "ipfsGateway":"https://ipfs.io/ipfs/",
-        "algod":"https://algoexplorerapi.io",
-        "blockExplorer":"https://algoexplorer.io"
-    },
-    {
         "network": "TestNet",
         "ipfsGateway":"https://ipfs.io/ipfs/",
         "algod":"https://testnet.algoexplorerapi.io",
         "blockExplorer":"https://testnet.algoexplorer.io"
+    },
+    {
+        "network": "MainNet",
+        "ipfsGateway":"https://ipfs.io/ipfs/",
+        "algod":"https://algoexplorerapi.io",
+        "blockExplorer":"https://algoexplorer.io"
     }
 ]

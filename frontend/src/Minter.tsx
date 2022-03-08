@@ -10,6 +10,7 @@ import { Button, Card, Dialog, Elevation } from '@blueprintjs/core'
 import QRCode from "react-qr-code";
 import algosdk, {secretKeyToMnemonic } from 'algosdk'
 import { DIALOG_BODY, DIALOG_FOOTER } from '@blueprintjs/core/lib/esm/common/classes'
+import { MediaDisplay } from './MediaDisplay';
 
 QrScanner.WORKER_PATH = "/qr-scanner-worker.min.js"
 
@@ -111,7 +112,7 @@ interface NFTCardProps {
 function NFTCard(props: NFTCardProps) {
     return (
         <Card elevation={Elevation.THREE} >
-            <img src={resolveProtocol(0, props.md.image)} style={{maxWidth: "500px"}}alt='nft'></img>
+            <MediaDisplay mediaSrc={resolveProtocol(0, props.md.mediaURL())} mimeType={props.md.mimeType()} />
             <div className='container'>
                 <Button loading={props.loading} icon='clean' intent='success' onClick={props.mintAndCreate}>Mint</Button>
             </div>

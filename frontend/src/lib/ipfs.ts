@@ -1,4 +1,4 @@
-import { ipfsURL } from './nft'
+import { ipfsURL, mediaIntegrity } from './nft'
 import {Metadata} from './metadata'
 import {conf} from './config'
 
@@ -21,10 +21,29 @@ function getStorageClient(activeConf: number): Web3Storage {
 
 export async function putToIPFS(activeConf: number, file: File, md: Metadata): Promise<string> {
     const storage = getStorageClient(activeConf) 
-    const imgAdded = await storage.put([file], {wrapWithDirectory: false})
-    md.image = ipfsURL(imgAdded)
+    const mediaAdded = await storage.put([file], {wrapWithDirectory: false})
 
-    return await storage.put([md.toFile()], {wrapWithDirectory: false})
+    const integ = await mediaIntegrity(file)
+
+    const mdc = {...md}
+    switch(md.mediaType()){
+        case 'image':
+            mdc.image = ipfsURL(mediaAdded)
+            mdc.image_integrity = integ
+            break
+        case 'audio':
+            mdc.animation_url = ipfsURL(mediaAdded)
+            mdc.animation_url_integrity = integ
+            break
+        case 'video':
+            mdc.animation_url = ipfsURL(mediaAdded)
+            mdc.animation_url_integrity = integ
+            break
+    }
+
+    const mdobj = new Metadata(mdc)
+
+    return await storage.put([mdobj.toFile()], {wrapWithDirectory: false})
 }
 
 export async function listRecentFiles( activeConf: number, ms_threshold: number): Promise<any[]> {

@@ -16,6 +16,12 @@ export type Localization = {
     integrity?: LocalizationIntegrity
 }
 
+// Just takes the first chunk of the mimetype (the type)
+export function getTypeFromMimeType(filetype: string): string {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [type, _] = filetype.split("/")
+    return type
+}
 
 function omitRawAndEmpty(k,v){
     if(k === "_raw") return undefined;
@@ -79,6 +85,25 @@ export class Metadata {
         if(this._raw === undefined) this._raw = JSON.stringify({...this}, omitRawAndEmpty)
         return JSON.stringify(JSON.parse(this._raw) , omitRawAndEmpty, fmt?2:0)
     }
+
+
+    mimeType(): string {
+        if(this.animation_url !== "") return this.animation_url_mimetype;
+        if(this.external_url_mimetype !== "") return this.external_url_mimetype;
+        return this.image_mimetype
+    }
+
+    mediaType(): string {
+        return getTypeFromMimeType(this.mimeType())
+    }
+
+    mediaURL(): string {
+        if(this.animation_url !== "") {
+            return this.animation_url
+        }
+        return this.image
+    }
+
 
     static fromToken(t: Token){
         return new Metadata({name:t.name, image: t.url, decimals: t.decimals })

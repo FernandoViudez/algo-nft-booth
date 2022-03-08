@@ -10,6 +10,7 @@ import {
   listRecentFiles,
 } from "./lib/ipfs";
 import { SessionWallet } from "algorand-session-wallet";
+import { MediaDisplay } from "./MediaDisplay";
 
 type PickerProps = {
   activeConfig: number;
@@ -73,13 +74,17 @@ type DisplayCardProps = {
 
 function DisplayCard(props: DisplayCardProps) {
   return (
-    <Card
-      className="content-collection-item"
-      elevation={Elevation.TWO}
-    >
-        <Link to={'/mint/'+props.cidmd.cid}>
-            <img src={resolveProtocol(0, props.cidmd.md.image)} alt="nft" />
-        </Link>
-    </Card>
+
+    <Link to={'/mint/'+props.cidmd.cid}>
+      <Card
+        className="content-collection-item"
+        elevation={Elevation.TWO}
+      >
+              <MediaDisplay 
+                mediaSrc={resolveProtocol(0,props.cidmd.md.mediaURL())} 
+                mimeType={props.cidmd.md.mimeType()} 
+                />
+      </Card>
+    </Link>
   );
 }

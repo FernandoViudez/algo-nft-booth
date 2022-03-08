@@ -77,7 +77,7 @@ export async function fundAccount(
   const grouped = [fund_txn, optin_txn, xfer_txn];
   algosdk.assignGroupID(grouped);
 
-  // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [fund_txn_s, _, xfer_txn_s] = await wallet.signTxn(grouped);
   const optin_txn_s = algosdk.signTransaction(optin_txn, acct.sk);
   await sendWait(activeConf, [fund_txn_s, optin_txn_s, xfer_txn_s]);
