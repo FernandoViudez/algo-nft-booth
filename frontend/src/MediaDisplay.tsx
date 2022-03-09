@@ -1,6 +1,7 @@
 import { getTypeFromMimeType } from "./lib/metadata"
 
 type MediaDisplayProps = {
+    title: string
     mimeType: string
     mediaSrc: string | undefined
 }
@@ -31,8 +32,13 @@ export function MediaDisplay(props: MediaDisplayProps){
     }
 
     return (
-        <div className='media-display content' >
-            {media}
+        <div className='media-display container'>
+
+            <h3>{props.title}</h3>
+
+            <div className='content' > 
+                {media}
+            </div>
         </div>
     )
 }

@@ -81,6 +81,11 @@ export class Metadata {
         return new File([md_blob], METADATA_FILE)
     }
 
+    title(): string {
+        if(this.properties !== undefined && 'title' in this.properties) return this.properties.title.toString()
+        return this.name
+    }
+
     toString(fmt: Boolean = false): string {
         if(this._raw === undefined) this._raw = JSON.stringify({...this}, omitRawAndEmpty)
         return JSON.stringify(JSON.parse(this._raw) , omitRawAndEmpty, fmt?2:0)

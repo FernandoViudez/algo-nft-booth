@@ -112,7 +112,11 @@ interface NFTCardProps {
 function NFTCard(props: NFTCardProps) {
     return (
         <Card elevation={Elevation.THREE} >
-            <MediaDisplay mediaSrc={resolveProtocol(0, props.md.mediaURL())} mimeType={props.md.mimeType()} />
+            <MediaDisplay 
+                title={props.md.title()}
+                mediaSrc={resolveProtocol(0, props.md.mediaURL())} 
+                mimeType={props.md.mimeType()} 
+            />
             <div className='container'>
                 <Button loading={props.loading} icon='clean' intent='success' onClick={props.mintAndCreate}>Mint</Button>
             </div>

@@ -47,18 +47,20 @@ export default function Picker(props: PickerProps) {
             } as CIDMD);
         }
         setOptions(filtered);
+        setInitialized(true);
       });
     });
-    setInitialized(true);
   }, [props.activeConfig, initialized]);
 
-  const cards = options.map((option) => {
+  const cards = initialized?options.map((option) => {
     return <DisplayCard key={option.cid} cidmd={option} />;
-  });
+  }):[<h5 key='loading'>Loading...</h5>];
 
   return (
     <div className="container">
-      <div className="content content-collection">{cards}</div>
+      <div className="content content-collection">
+        {cards}
+      </div>
     </div>
   );
 }
@@ -81,6 +83,7 @@ function DisplayCard(props: DisplayCardProps) {
         elevation={Elevation.TWO}
       >
               <MediaDisplay 
+                title={props.cidmd.md.title()}
                 mediaSrc={resolveProtocol(0,props.cidmd.md.mediaURL())} 
                 mimeType={props.cidmd.md.mimeType()} 
                 />

@@ -11,10 +11,11 @@ type UploaderProps = {
 export function Uploader(props: UploaderProps) {
 
     const [meta, setMeta]               = React.useState(new Metadata())
+    const [title, setTitle]             = React.useState<string>();
     const [loading, setLoading]         = React.useState(false)
     const [fileObj, setFileObj]         = React.useState<File>();
-    const [mediaSrc, setMediaSrc]           = React.useState<string>();
-    const [mimeType, setMimeType]           = React.useState<string>();
+    const [mediaSrc, setMediaSrc]       = React.useState<string>();
+    const [mimeType, setMimeType]       = React.useState<string>();
 
     function setFile(file: File) {
         setFileObj(file)
@@ -24,11 +25,12 @@ export function Uploader(props: UploaderProps) {
         reader.readAsDataURL(file);
 
         setMimeType(file.type)
+        setTitle(file.name)
 
         setMeta((meta)=>{
             const metaObj = {
                 ...meta,
-                properties:{...meta.properties, size:file.size}
+                properties:{...meta.properties, size:file.size, title:file.name}
             }
 
             const mediaType = getTypeFromMimeType(file.type)
@@ -51,7 +53,6 @@ export function Uploader(props: UploaderProps) {
         })
     }
 
-
     async function uploadMedia() {
         setLoading(true) 
 
@@ -62,7 +63,6 @@ export function Uploader(props: UploaderProps) {
             description:"NFT Minted SXSW 2022",
             decimals: 0,
         }) 
-
         setMeta(md)
 
         try {
@@ -80,7 +80,7 @@ export function Uploader(props: UploaderProps) {
     return (
         <div className='container'>
             <Card elevation={Elevation.TWO} className='mint-card' >
-                <UploadContainer mimeType={mimeType} mediaSrc={mediaSrc} setFile={setFile} {...meta} />
+                <UploadContainer mediaTitle={title} mimeType={mimeType} mediaSrc={mediaSrc} setFile={setFile} {...meta} />
                 <Button intent='success' style={{float:'right', margin:"15px"}} loading={loading} onClick={uploadMedia}>Upload</Button>
             </Card>
         </div>
@@ -89,6 +89,7 @@ export function Uploader(props: UploaderProps) {
 }
 
 type UploaderContainerProps = {
+    mediaTitle: string | undefined
     mediaSrc: string | undefined
     mimeType: string | undefined
     setFile(f: File): void
@@ -112,7 +113,7 @@ function UploadContainer(props: UploaderContainerProps) {
     return (
         <div className='container' >
             <div className='content content-piece'>
-                <MediaDisplay mimeType={props.mimeType} mediaSrc={props.mediaSrc} />
+                <MediaDisplay title={props.mediaTitle} mimeType={props.mimeType} mediaSrc={props.mediaSrc} />
             </div>
         </div>
     )
