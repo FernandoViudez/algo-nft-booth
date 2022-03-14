@@ -37,12 +37,16 @@ export default function Picker(props: PickerProps) {
 
     const mimeTypes = await Promise.all(mime_type_promises)
 
+    const new_opts = []
     const md_promises = [];
     for (const idx in opts) {
-      if (mimeTypes[idx] === "application/json")
+      if (mimeTypes[idx] === "application/json"){
         md_promises.push(
           getMetaFromIpfs(getIpfsUrlFromCID(props.activeConfig, opts[idx].cid))
         );
+        new_opts.push(opts[idx])
+
+      }
     }
 
     const metas = await Promise.all(md_promises)
@@ -51,7 +55,7 @@ export default function Picker(props: PickerProps) {
       if (metas[idx].name === "") continue;
 
       filtered.push({
-        cid: opts[idx].cid,
+        cid: new_opts[idx].cid,
         md: metas[idx]
       } as CIDMD);
     }
@@ -62,12 +66,10 @@ export default function Picker(props: PickerProps) {
   // Look at recent
   React.useEffect(() => {
     if (initialized) return;
-
     getRecentFiles(props.activeConfig).then((filtered) => {
       setOptions(filtered);
       setInitialized(true);
     })
-
   }, [props.activeConfig, initialized]);
 
   const cards = initialized ? options.map((option) => {
