@@ -49,7 +49,7 @@ export async function putToIPFS(activeConf: number, file: File, md: Metadata): P
 export async function listRecentFiles( activeConf: number, ms_threshold: number): Promise<any[]> {
     const w3s = getStorageClient(activeConf)
     const options = []
-    for await (const upload of w3s.list({maxResults:10})) {
+    for await (const upload of w3s.list({maxResults:20})) {
         options.push(upload)
     }
     return options

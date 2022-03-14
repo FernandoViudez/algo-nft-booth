@@ -1,12 +1,13 @@
 import { Card, Elevation } from "@blueprintjs/core";
 
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import React from "react";
 import { Metadata } from "./lib/metadata";
 import { resolveProtocol } from "./lib/nft";
 import {
   getIpfsUrlFromCID,
   getMetaFromIpfs,
+  getMimeTypeFromIpfs,
   listRecentFiles,
 } from "./lib/ipfs";
 import { SessionWallet } from "algorand-session-wallet";
@@ -25,36 +26,53 @@ export default function Picker(props: PickerProps) {
   const [options, setOptions] = React.useState([]);
   const [initialized, setInitialized] = React.useState(false);
 
+
+  async function getRecentFiles(activeConfig: number): Promise<CIDMD[]> {
+    const opts = await listRecentFiles(activeConfig, MAX_DELTA)
+
+    const mime_type_promises = []
+    for (const opt of opts) {
+      mime_type_promises.push(getMimeTypeFromIpfs(getIpfsUrlFromCID(props.activeConfig, opt.cid)))
+    }
+
+    const mimeTypes = await Promise.all(mime_type_promises)
+
+    const md_promises = [];
+    for (const idx in opts) {
+      if (mimeTypes[idx] === "application/json")
+        md_promises.push(
+          getMetaFromIpfs(getIpfsUrlFromCID(props.activeConfig, opts[idx].cid))
+        );
+    }
+
+    const metas = await Promise.all(md_promises)
+    const filtered = [];
+    for (const idx in metas) {
+      if (metas[idx].name === "") continue;
+
+      filtered.push({
+        cid: opts[idx].cid,
+        md: metas[idx]
+      } as CIDMD);
+    }
+
+    return filtered
+  }
+
   // Look at recent
   React.useEffect(() => {
     if (initialized) return;
 
-    listRecentFiles(props.activeConfig, MAX_DELTA).then((opts) => {
-      const md_promises = [];
-      for (const opt of opts) {
-        //const opt = opts[idx];
-        md_promises.push(
-          getMetaFromIpfs(getIpfsUrlFromCID(props.activeConfig, opt.cid))
-        );
-      }
+    getRecentFiles(props.activeConfig).then((filtered) => {
+      setOptions(filtered);
+      setInitialized(true);
+    })
 
-      Promise.all(md_promises).then((arr) => {
-        const filtered = [];
-        for (const idx in arr) {
-          if (arr[idx].name !== "") filtered.push({
-              cid: opts[idx].cid,
-              md: arr[idx]
-            } as CIDMD);
-        }
-        setOptions(filtered);
-        setInitialized(true);
-      });
-    });
   }, [props.activeConfig, initialized]);
 
-  const cards = initialized?options.map((option) => {
+  const cards = initialized ? options.map((option) => {
     return <DisplayCard key={option.cid} cidmd={option} />;
-  }):[<h5 key='loading'>Loading...</h5>];
+  }) : [<h5 key='loading'>Loading...</h5>];
 
   return (
     <div className="container">
@@ -66,8 +84,8 @@ export default function Picker(props: PickerProps) {
 }
 
 type CIDMD = {
-    cid: string
-    md: Metadata
+  cid: string
+  md: Metadata
 }
 
 type DisplayCardProps = {
@@ -77,16 +95,16 @@ type DisplayCardProps = {
 function DisplayCard(props: DisplayCardProps) {
   return (
 
-    <Link to={'/mint/'+props.cidmd.cid}>
+    <Link to={'/mint/' + props.cidmd.cid}>
       <Card
         className="content-collection-item"
         elevation={Elevation.TWO}
       >
-              <MediaDisplay 
-                title={props.cidmd.md.title()}
-                mediaSrc={resolveProtocol(0,props.cidmd.md.mediaURL())} 
-                mimeType={props.cidmd.md.mimeType()} 
-                />
+        <MediaDisplay
+          title={props.cidmd.md.title()}
+          mediaSrc={resolveProtocol(0, props.cidmd.md.mediaURL())}
+          mimeType={props.cidmd.md.mimeType()}
+        />
       </Card>
     </Link>
   );
