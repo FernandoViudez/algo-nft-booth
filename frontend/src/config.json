@@ -2,13 +2,13 @@
     {
         "network": "MainNet",
         "ipfsGateway":"https://ipfs.io/ipfs/",
-        "algod":"https://algoexplorerapi.io",
+        "algod":"https://mainnet-api.algonode.cloud",
         "blockExplorer":"https://algoexplorer.io"
     },
     {
         "network": "TestNet",
         "ipfsGateway":"https://ipfs.io/ipfs/",
-        "algod":"https://testnet.algoexplorerapi.io",
+        "algod":"https://testnet-api.algonode.cloud",
         "blockExplorer":"https://testnet.algoexplorer.io"
     }
 ]

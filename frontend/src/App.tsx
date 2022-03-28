@@ -5,25 +5,24 @@ import { SessionWallet } from 'algorand-session-wallet';
 import {Uploader} from './Uploader'
 import React from 'react';
 import {Minter} from './Minter';
+import EventMints from './EventMints';
 import AlgorandWalletConnector from './AlgorandWalletConnector'
-import { conf, sessionGetActiveConf } from './lib/config';
+import { conf, sessionGetActiveConf, eventConfs } from './lib/config';
 
 import {
-  HashRouter as Router,
   Link,
-  Switch,
   Route,
+  Routes,
 } from 'react-router-dom'
 
 
 type AppProps = {
-  history: History,
+  history: any,
 }
 
 function App(props: AppProps) {
 
   const activeConf = sessionGetActiveConf()
-
   const sw = new SessionWallet(conf[activeConf].network)
 
 
@@ -37,8 +36,11 @@ function App(props: AppProps) {
     setConnected(sw.connected())
   }
 
+  const events = eventConfs.map((ec)=>{
+    return <Link key={ec.event} to={'/event/'+ec.event}><Button icon='folder-open' minimal={true}>{ec.title}</Button></Link>
+  }) 
+
   return (
-    <Router >
       <div className="App">
         <Navbar>
         <Navbar.Group align={Alignment.LEFT}>
@@ -46,6 +48,10 @@ function App(props: AppProps) {
           <Navbar.Divider />
           <Link to='/'><Button minimal={true} icon='search'>Choose</Button></Link>
           <Link to='/upload'><Button minimal={true} icon='upload'>Upload</Button></Link>
+        </Navbar.Group>
+        <Navbar.Group align={Alignment.LEFT}>
+          <Navbar.Divider />
+          {events}
         </Navbar.Group>
         <Navbar.Group  align={Alignment.RIGHT}>
           <AlgorandWalletConnector  
@@ -55,17 +61,17 @@ function App(props: AppProps) {
             connected={connected} 
             updateWallet={updateWallet}
           />
-
         </Navbar.Group>
         </Navbar>
-        <Switch>
-          <Route exact path="/" children={<Picker  activeConfig={activeConf} sw={sessionWallet}></Picker>} />
-          <Route path="/mint/:cid" children={ <Minter  activeConfig={activeConf} sw={sessionWallet}></Minter> }/>
-          <Route exact path="/upload" children={ <Uploader  activeConfig={activeConf} ></Uploader> }/>
-        </Switch>
+        <Routes>
+          <Route path="/" element={<Picker  activeConfig={activeConf} sw={sessionWallet}></Picker>} />
+          <Route path="/mint/:cid" element={ <Minter  activeConfig={activeConf} sw={sessionWallet}></Minter> }/>
+          <Route path="/upload" element={ <Uploader  activeConfig={activeConf} ></Uploader> }/>
+          <Route path="/event/:name" element={ <EventMints  activeConfig={activeConf} ></EventMints> }/>
+        </Routes>
       </div>
-    </Router>
   );
 }
+
 
 export default App;

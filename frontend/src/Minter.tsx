@@ -113,6 +113,7 @@ function NFTCard(props: NFTCardProps) {
     return (
         <Card elevation={Elevation.THREE} >
             <MediaDisplay 
+                name={props.md.name}
                 title={props.md.title()}
                 mediaSrc={resolveProtocol(0, props.md.mediaURL())} 
                 mimeType={props.md.mimeType()} 

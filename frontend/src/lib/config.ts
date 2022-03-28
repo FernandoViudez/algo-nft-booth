@@ -6,7 +6,17 @@ type Config = {
     blockExplorer: string; // The Block Explorer to allow linking out to
 }
 
+type EventConfig = {
+    creator: string;
+    event: string;
+    title: string;
+    date: string;
+    asaList: number[];
+};
+
+
 export const conf = require("../config.json") as Config[];
+export const eventConfs = require("../event_config.json") as EventConfig[];
 
 export function getAddrUrl(idx: number, addr: string): string {
     return conf[idx].blockExplorer + "address/" + addr
@@ -24,4 +34,11 @@ export function sessionGetActiveConf(): number {
 
 export function sessionSetActiveConf(ac: number)  {
     sessionStorage.setItem(activeConfKey, ac.toString())
+}
+
+export function getEventConfig(name: string): EventConfig {
+    for(const ec of eventConfs){
+        if (ec.event === name) return ec;
+    }
+    return undefined;
 }

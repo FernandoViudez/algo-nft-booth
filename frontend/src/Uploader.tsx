@@ -113,7 +113,7 @@ function UploadContainer(props: UploaderContainerProps) {
     return (
         <div className='container' >
             <div className='content content-piece'>
-                <MediaDisplay title={props.mediaTitle} mimeType={props.mimeType} mediaSrc={props.mediaSrc} />
+                <MediaDisplay name={""} title={props.mediaTitle} mimeType={props.mimeType} mediaSrc={props.mediaSrc} />
             </div>
         </div>
     )
