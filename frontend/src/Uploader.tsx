@@ -58,9 +58,9 @@ export function Uploader(props: UploaderProps) {
 
         const md = new Metadata({
             ...meta,
-            name: "SXSW AlgoRanch NFT",
-            unitName:"sxsw-aus",
-            description:"NFT Minted SXSW 2022",
+            name: "Unified Buenos Aires NFT",
+            unitName:"unfd-bs-as",
+            description:"NFT Minted at Unified LATAM 2022",
             decimals: 0,
         }) 
         setMeta(md)
