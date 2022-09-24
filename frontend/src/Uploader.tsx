@@ -58,9 +58,9 @@ export function Uploader(props: UploaderProps) {
 
         const md = new Metadata({
             ...meta,
-            name: "Unified Buenos Aires NFT",
-            unitName:"unfd-bs-as",
-            description:"NFT Minted at Unified LATAM 2022",
+            name: "Unified LATAM 2022 NFT",
+            unitName:"unfd-lat",
+            description:"NFT Minted at Unified LATAM 2022, Buenos Aires",
             decimals: 0,
         }) 
         setMeta(md)
