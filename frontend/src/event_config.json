@@ -1,6 +1,15 @@
 [
     {
         "creator": "EQPHU7UQD6MBBD5IVQWMC6KXLESXGMCB5VO6CDGTKDVIO5MVGAGENKNHGU",
+        "event": "DEVCON2022",
+        "title": "DEVCON 2022",
+        "date": "Oct 11, 2022",
+        "asaList": [
+            
+        ]
+    },
+    {
+        "creator": "EQPHU7UQD6MBBD5IVQWMC6KXLESXGMCB5VO6CDGTKDVIO5MVGAGENKNHGU",
         "event": "UNFDLAT2022",
         "title": "UNIFIED 2022",
         "date": "Sep 24, 2022",
