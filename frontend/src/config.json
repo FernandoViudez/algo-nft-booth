@@ -1,14 +1,14 @@
 [
     {
         "network": "MainNet",
-        "ipfsGateway":"https://ipfs.io/ipfs/",
-        "algod":"https://mainnet-api.algonode.cloud",
-        "blockExplorer":"https://algoexplorer.io"
+        "ipfsGateway": "https://ipfs.io/ipfs/",
+        "algod": "https://mainnet-api.algonode.cloud",
+        "blockExplorer": "https://algoexplorer.io"
     },
     {
         "network": "TestNet",
-        "ipfsGateway":"https://ipfs.io/ipfs/",
-        "algod":"https://testnet-api.algonode.cloud",
-        "blockExplorer":"https://testnet.algoexplorer.io"
+        "ipfsGateway": "https://ipfs.io/ipfs/",
+        "algod": "https://testnet-api.algonode.cloud",
+        "blockExplorer": "https://testnet.algoexplorer.io"
     }
 ]

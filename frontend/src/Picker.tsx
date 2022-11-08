@@ -103,8 +103,8 @@ function DisplayCard(props: DisplayCardProps) {
         elevation={Elevation.TWO}
       >
         <MediaDisplay
-          name={props.cidmd.md.name}
-          title={props.cidmd.md.title()}
+          name={props.cidmd.md.description}
+          title={props.cidmd.md.name}
           mediaSrc={resolveProtocol(0, props.cidmd.md.mediaURL())}
           mimeType={props.cidmd.md.mimeType()}
         />

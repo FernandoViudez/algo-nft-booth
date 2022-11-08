@@ -31,6 +31,16 @@ export function Minter(props: MinterProps){
 
     const [createdId, setCreatedId] = React.useState(0)
 
+    function resetAllStates() {
+        setMd(new Metadata({}));
+        setImportingAccount(undefined);
+        setNFT(undefined);
+        setFundLoading(false);
+        setLoading(false);
+        setPopupOpen(false);
+        setCreatedId(0);
+    }
+
     React.useEffect(()=>{
         if(md._raw === undefined)
             getMetaFromIpfs(getIpfsUrlFromCID(props.activeConfig, cid)).then((md)=>{
@@ -39,17 +49,20 @@ export function Minter(props: MinterProps){
     }, [props.activeConfig, cid, md])
 
     async function mintOnly(){
-        // Create ASA with our user
-        setLoading(true)
-        const result = await NFT.create(props.sw.wallet, props.activeConfig,  md, cid)
-        setNFT(result)
-        setCreatedId(result.id())
+        try {
+            // Create ASA with our user
+            setLoading(true)
+            const result = await NFT.create(props.sw.wallet, props.activeConfig,  md, cid)
+            setNFT(result)
+            setCreatedId(result.id())
+        } catch (error) {
+            resetAllStates();
+        }
     }
 
     async function handleScannedAccount(addr: string){
         // Fires after successful scan of addr
         await xferAsset(props.sw.wallet, props.activeConfig, addr, createdId)
-
         setCreatedId(0)
         setLoading(false)
     }
@@ -67,22 +80,30 @@ export function Minter(props: MinterProps){
     }
 
     async function continueCreate() {
-        // Create ASA
-        const result = await NFT.create(props.sw.wallet, props.activeConfig,  md, cid)
-        setNFT(result)
-        setPopupOpen(true)
+        try {
+            const result = await NFT.create(props.sw.wallet, props.activeConfig,  md, cid)
+            setNFT(result)
+            setPopupOpen(true)
+        } catch (error) {
+            resetAllStates();
+        }
     }
 
     async function fundIt(){
-        // User has scanned it, issue grouped transactions
-        setFundLoading(true)
-        
-        await fundAccount(props.sw.wallet, props.activeConfig, importingAccount, nft.id())
-        // Unset
-        setImportingAccount(undefined)
-        setFundLoading(false)
-        setLoading(false)
-        window.location.href="/NFTBooth"
+        try {
+            // User has scanned it, issue grouped transactions
+            setFundLoading(true)
+
+            await fundAccount(props.sw.wallet, props.activeConfig, importingAccount, nft.id())
+                        
+            // Unset
+            setImportingAccount(undefined)
+            setFundLoading(false)
+            setLoading(false)
+            window.location.href="/NFTBooth"
+        } catch (error) {
+            resetAllStates();
+        }
     }
 
     return (
@@ -119,7 +140,8 @@ function NFTCard(props: NFTCardProps) {
                 mimeType={props.md.mimeType()} 
             />
             <div className='container'>
-                <Button loading={props.loading} icon='clean' intent='success' onClick={props.mintAndCreate}>Mint</Button>
+                <Button loading={props.loading} icon='clean' intent='success' onClick={props.mintAndCreate}>Setup account</Button>
+                <Button loading={props.loading} icon='clean' intent='success' onClick={props.mintOnly}>Send to existing account</Button>
             </div>
         </Card>
     )

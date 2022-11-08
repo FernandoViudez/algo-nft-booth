@@ -1,6 +1,6 @@
 import { ipfsURL, mediaIntegrity } from './nft'
-import {Metadata} from './metadata'
-import {conf} from './config'
+import { Metadata } from './metadata'
+import { conf } from './config'
 
 /*
  Currently an issue with resolving ipfs-car module in web3.storage when using react-scripts
@@ -13,20 +13,20 @@ import { Web3Storage } from 'web3.storage/dist/bundle.esm.min.js'
 
 let storageClient = undefined
 function getStorageClient(activeConf: number): Web3Storage {
-    if(storageClient === undefined){
-        storageClient = new Web3Storage({ token: " ", endpoint:"https://worker.barnji.workers.dev" })
+    if (storageClient === undefined) {
+        storageClient = new Web3Storage({ token: process.env.REACT_APP_WEB3_STORAGE_TOKEN })
     }
     return storageClient
 }
 
 export async function putToIPFS(activeConf: number, file: File, md: Metadata): Promise<string> {
-    const storage = getStorageClient(activeConf) 
-    const mediaAdded = await storage.put([file], {wrapWithDirectory: false})
+    const storage = getStorageClient(activeConf)
+    const mediaAdded = await storage.put([file], { wrapWithDirectory: false })
 
     const integ = await mediaIntegrity(file)
 
-    const mdc = {...md}
-    switch(md.mediaType()){
+    const mdc = { ...md }
+    switch (md.mediaType()) {
         case 'image':
             mdc.image = ipfsURL(mediaAdded)
             mdc.image_integrity = integ
@@ -43,24 +43,24 @@ export async function putToIPFS(activeConf: number, file: File, md: Metadata): P
 
     const mdobj = new Metadata(mdc)
 
-    return await storage.put([mdobj.toFile()], {wrapWithDirectory: false})
+    return await storage.put([mdobj.toFile()], { wrapWithDirectory: false })
 }
 
-export async function listRecentFiles( activeConf: number, ms_threshold: number): Promise<any[]> {
+export async function listRecentFiles(activeConf: number, ms_threshold: number): Promise<any[]> {
     const w3s = getStorageClient(activeConf)
     const options = []
-    for await (const upload of w3s.list({maxResults:20})) {
+    for await (const upload of w3s.list({ maxResults: 20 })) {
         options.push(upload)
     }
     return options
 }
 
-export function getIpfsUrlFromCID(activeConf:number, cid: string): string {
+export function getIpfsUrlFromCID(activeConf: number, cid: string): string {
     return conf[activeConf].ipfsGateway + cid
 }
 
 export async function getMimeTypeFromIpfs(url: string): Promise<string> {
-    const req = new Request(url, { method:"HEAD" })
+    const req = new Request(url, { method: "HEAD" })
     const resp = await fetch(req)
     return resp.headers.get("Content-Type")
 }
@@ -73,8 +73,8 @@ export async function getMetaFromIpfs(url: string): Promise<Metadata> {
         const body = await resp.blob()
         const text = await body.text()
         const parsed = JSON.parse(text)
-        return new Metadata({"_raw":text, ...parsed}) 
-    } catch (e){
+        return new Metadata({ "_raw": text, ...parsed })
+    } catch (e) {
         console.error(e)
     }
 

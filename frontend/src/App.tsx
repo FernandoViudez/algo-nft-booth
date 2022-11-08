@@ -7,7 +7,7 @@ import React from 'react';
 import {Minter} from './Minter';
 import EventMints from './EventMints';
 import AlgorandWalletConnector from './AlgorandWalletConnector'
-import { conf, sessionGetActiveConf, eventConfs } from './lib/config';
+import { conf, sessionGetActiveConf } from './lib/config';
 
 import {
   Link,
@@ -36,9 +36,7 @@ function App(props: AppProps) {
     setConnected(sw.connected())
   }
 
-  const events = eventConfs.map((ec)=>{
-    return <Link key={ec.event} to={'/event/'+ec.event}><Button icon='folder-open' minimal={true}>{ec.title}</Button></Link>
-  }) 
+  const events = [];
 
   return (
       <div className="App">
