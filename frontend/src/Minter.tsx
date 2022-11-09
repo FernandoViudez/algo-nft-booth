@@ -14,7 +14,7 @@ import { MediaDisplay } from './MediaDisplay';
 
 QrScanner.WORKER_PATH = "/qr-scanner-worker.min.js"
 
-export type MinterProps = {
+export type MinterProps = { 
     activeConfig: number 
     sw: SessionWallet
 }
@@ -31,8 +31,10 @@ export function Minter(props: MinterProps){
 
     const [createdId, setCreatedId] = React.useState(0)
 
-    function resetAllStates() {
-        setMd(new Metadata({}));
+    function resetAllStates(errorMssg?: string) {
+        if(errorMssg) {
+            alert(errorMssg);
+        }
         setImportingAccount(undefined);
         setNFT(undefined);
         setFundLoading(false);
@@ -56,7 +58,7 @@ export function Minter(props: MinterProps){
             setNFT(result)
             setCreatedId(result.id())
         } catch (error) {
-            resetAllStates();
+            resetAllStates(error);
         }
     }
 
@@ -85,7 +87,7 @@ export function Minter(props: MinterProps){
             setNFT(result)
             setPopupOpen(true)
         } catch (error) {
-            resetAllStates();
+            resetAllStates(error);
         }
     }
 
@@ -102,7 +104,7 @@ export function Minter(props: MinterProps){
             setLoading(false)
             window.location.href="/NFTBooth"
         } catch (error) {
-            resetAllStates();
+            resetAllStates(error);
         }
     }
 
@@ -132,16 +134,17 @@ interface NFTCardProps {
 
 function NFTCard(props: NFTCardProps) {
     return (
-        <Card elevation={Elevation.THREE} >
+        <Card className="tt-bkg-theme" elevation={Elevation.THREE} >
             <MediaDisplay 
-                name={props.md.name}
-                title={props.md.title()}
+                unitName={props.md.unitName}
+                name={props.md.description}
+                title={props.md.title().split(".")[0]}
                 mediaSrc={resolveProtocol(0, props.md.mediaURL())} 
                 mimeType={props.md.mimeType()} 
             />
             <div className='container'>
                 <Button loading={props.loading} icon='clean' intent='success' onClick={props.mintAndCreate}>Setup account</Button>
-                <Button loading={props.loading} icon='clean' intent='success' onClick={props.mintOnly}>Send to existing account</Button>
+                <Button icon='clean' intent='success' onClick={props.mintOnly}>Send to existing account</Button>
             </div>
         </Card>
     )

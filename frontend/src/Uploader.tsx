@@ -16,6 +16,7 @@ export function Uploader(props: UploaderProps) {
     const [fileObj, setFileObj]         = React.useState<File>();
     const [mediaSrc, setMediaSrc]       = React.useState<string>();
     const [mimeType, setMimeType]       = React.useState<string>();
+    const [unitName, setUnitName]       = React.useState<string>();
 
     function setFile(file: File) {
         setFileObj(file)
@@ -54,13 +55,18 @@ export function Uploader(props: UploaderProps) {
     }
 
     async function uploadMedia() {
-        setLoading(true) 
+        setLoading(true)
+        
+        if(unitName.length > 8) {
+            alert("Unit name MUST be 8 bytes or less");
+            setLoading(false);
+        }
 
         const md = new Metadata({
             ...meta,
             name: `Trantorian ${process.env.REACT_APP_EVENT_NAME} POAP`,
-            unitName:"TT-BITCONF",
-            description:`POAP Minted at ${process.env.REACT_APP_EVENT_NAME} ${process.env.REACT_APP_EVENT_DATE.split(",")[1].trim()}`,
+            unitName: unitName,
+            description:`POAP Minted at ${process.env.REACT_APP_EVENT_NAME} ${new Date().getFullYear()}`,
             decimals: 0,
         }) 
         setMeta(md)
@@ -77,10 +83,15 @@ export function Uploader(props: UploaderProps) {
         }
     }
 
+    function onInputChange(event) {
+        setUnitName(event.target.value);
+    }
+
     return (
         <div className='container'>
             <Card elevation={Elevation.TWO} className='mint-card' >
                 <UploadContainer mediaTitle={title} mimeType={mimeType} mediaSrc={mediaSrc} setFile={setFile} {...meta} />
+                <input onChange={onInputChange} placeholder="Unit name"></input>
                 <Button intent='success' style={{float:'right', margin:"15px"}} loading={loading} onClick={uploadMedia}>Upload</Button>
             </Card>
         </div>
@@ -113,7 +124,7 @@ function UploadContainer(props: UploaderContainerProps) {
     return (
         <div className='container' >
             <div className='content content-piece'>
-                <MediaDisplay name={""} title={props.mediaTitle} mimeType={props.mimeType} mediaSrc={props.mediaSrc} />
+                <MediaDisplay unitName={""} name={""} title={props.mediaTitle} mimeType={props.mimeType} mediaSrc={props.mediaSrc} />
             </div>
         </div>
     )

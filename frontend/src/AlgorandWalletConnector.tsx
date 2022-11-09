@@ -82,7 +82,7 @@ export default function AlgorandWalletConnector(props:AlgorandWalletConnectorPro
                 large={true} 
                 fill={true} 
                 minimal={true} 
-                outlined={true} 
+                outlined={true}
                 onClick={handleSelectedWallet}
                 > 
                 <div className='wallet-option'>
@@ -97,10 +97,8 @@ export default function AlgorandWalletConnector(props:AlgorandWalletConnectorPro
     if (!props.connected) return (
         <div>
             <Button
-                minimal={true}
                 rightIcon='selection'
-                intent='warning'
-                outlined={true}
+                intent='success'
                 onClick={handleDisplayWalletSelection}>Connect Wallet</Button>
 
             <Dialog isOpen={selectorOpen} title='Select Wallet' onClose={handleSelectedWallet} >
@@ -127,7 +125,8 @@ export default function AlgorandWalletConnector(props:AlgorandWalletConnectorPro
         <div>
             <HTMLSelect 
                 onChange={handleChangeAccount} 
-                minimal={true} 
+                minimal={true}
+                className="wallet-select-list"
                 iconProps={iconprops} 
                 defaultValue={props.sessionWallet.accountIndex()} >
                 {addr_list}

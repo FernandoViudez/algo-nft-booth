@@ -40,12 +40,14 @@ function App(props: AppProps) {
 
   return (
       <div className="App">
-        <Navbar>
+        <Navbar className='tt-bkg-theme'>
         <Navbar.Group align={Alignment.LEFT}>
-          <Navbar.Heading>Algorand NFT Minter</Navbar.Heading>
+          <Navbar.Heading>
+            <img className="tt-logo" src="https://src.trantorian.com/img/assets/trantorian-logo.png" alt="logo" />
+          </Navbar.Heading>
           <Navbar.Divider />
-          <Link to='/'><Button minimal={true} icon='search'>Choose</Button></Link>
-          <Link to='/upload'><Button minimal={true} icon='upload'>Upload</Button></Link>
+          <Link to='/'><Button className='navbar-btn' minimal={true} icon='search'>Choose</Button></Link>
+          <Link to='/upload'><Button className='navbar-btn' minimal={true} icon='upload'>Upload</Button></Link>
         </Navbar.Group>
         <Navbar.Group align={Alignment.LEFT}>
           <Navbar.Divider />
@@ -59,6 +61,9 @@ function App(props: AppProps) {
             connected={connected} 
             updateWallet={updateWallet}
           />
+        </Navbar.Group>
+        <Navbar.Group  align={Alignment.RIGHT}>
+          <div className='network-name'><b>{conf[activeConf].network}</b></div>
         </Navbar.Group>
         </Navbar>
         <Routes>

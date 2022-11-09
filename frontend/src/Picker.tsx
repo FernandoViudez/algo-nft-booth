@@ -78,9 +78,9 @@ export default function Picker(props: PickerProps) {
 
   return (
     <div className="container">
-      <div className="content content-collection">
-        {cards}
-      </div>
+        {
+          !props.sw.connected() ? <h2 className="warn-mssg">Please remember to connect your wallet to mint NFTs</h2> : <div className="content content-collection">{cards}</div>
+        }
     </div>
   );
 }
@@ -102,12 +102,13 @@ function DisplayCard(props: DisplayCardProps) {
         className="content-collection-item"
         elevation={Elevation.TWO}
       >
-        <MediaDisplay
-          name={props.cidmd.md.description}
-          title={props.cidmd.md.name}
-          mediaSrc={resolveProtocol(0, props.cidmd.md.mediaURL())}
-          mimeType={props.cidmd.md.mimeType()}
-        />
+          <MediaDisplay
+            unitName={props.cidmd.md.unitName}
+            name={props.cidmd.md.description}
+            title={props.cidmd.md.title().split(".")[0]}
+            mediaSrc={resolveProtocol(0, props.cidmd.md.mediaURL())}
+            mimeType={props.cidmd.md.mimeType()}
+          />
       </Card>
     </Link>
   );

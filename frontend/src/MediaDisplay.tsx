@@ -5,6 +5,7 @@ type MediaDisplayProps = {
     title: string
     mimeType: string
     mediaSrc: string | undefined
+    unitName: string
 }
 
 export function MediaDisplay(props: MediaDisplayProps){
@@ -35,9 +36,7 @@ export function MediaDisplay(props: MediaDisplayProps){
     return (
         <div className='media-display container'>
 
-            <h3>{props.title}</h3>
-            <h5>{props.name}</h5>
-
+            <h1>{props.title}</h1>
             <div className='content' > 
                 {media}
             </div>

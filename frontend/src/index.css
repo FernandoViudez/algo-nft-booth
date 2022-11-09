@@ -61,6 +61,8 @@
 .content-collection-item {
 	width: 30em;
 	margin: 2em;
+	background: #15151b;
+	font-family: 'Courier New', Courier, monospace;
 }
 .content-collection-item img {
 	max-width: 100%;
@@ -121,4 +123,45 @@
 .media-display {
 	display:flex;
 	flex-flow: column;
+}
+
+.media-display > h1 {
+	color: #d0d0d0!important;
+	text-align: left;
+	width: 100%;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.network-name {
+	padding: 10px;
+	color: white;
+}
+
+.warn-mssg {
+	padding: 2%;
+	border-radius: 16px;
+	background-color: lightgoldenrodyellow;
+}
+
+.tt-bkg-theme {
+	background-color: #15151b;
+}
+
+body {
+	background-image: url("https://src.trantorian.com/img/backgrounds/bg-nebula-dp.jpg");
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+
+.tt-logo {
+	height: 70px;
+	padding: 5%;
+}
+
+.navbar-btn {
+	color: grey !important;
+}
+
+.wallet-select-list > select {
+	color: white !important;
 }

@@ -41,6 +41,7 @@ export default function EventMints(props: EventMintsProps) {
                 elevation={Elevation.TWO}
             >
                 <MediaDisplay
+                    unitName={nft.metadata.unitName}
                     title={nft.metadata.title()}
                     name={nft.name()}
                     mediaSrc={resolveProtocol(props.activeConfig, nft.metadata.mediaURL())}
