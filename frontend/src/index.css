@@ -125,11 +125,15 @@
 	flex-flow: column;
 }
 
+@font-face {
+  font-family: trantorianMintingFont;
+  src: url(assets/fonts/Orbitron-Regular.ttf);
+}
 .media-display > h1 {
 	color: #d0d0d0!important;
 	text-align: left;
 	width: 100%;
-	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	font-family: trantorianMintingFont;
 }
 
 .network-name {
@@ -150,7 +154,7 @@
 body {
 	background-image: url("https://src.trantorian.com/img/backgrounds/bg-nebula-dp.jpg");
 	background-repeat: no-repeat;
-	background-size: 100%;
+	background-size: cover;
 }
 
 .tt-logo {
@@ -164,4 +168,8 @@ body {
 
 .wallet-select-list > select {
 	color: white !important;
+}
+
+#uploaded-media {
+	max-height: 50vh;
 }

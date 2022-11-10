@@ -67,6 +67,7 @@ export function Minter(props: MinterProps){
         await xferAsset(props.sw.wallet, props.activeConfig, addr, createdId)
         setCreatedId(0)
         setLoading(false)
+        window.location.href="/"
     }
 
     async function mintAndCreate(){
@@ -102,7 +103,7 @@ export function Minter(props: MinterProps){
             setImportingAccount(undefined)
             setFundLoading(false)
             setLoading(false)
-            window.location.href="/NFTBooth"
+            window.location.href="/"
         } catch (error) {
             resetAllStates(error);
         }
@@ -143,7 +144,7 @@ function NFTCard(props: NFTCardProps) {
                 mimeType={props.md.mimeType()} 
             />
             <div className='container'>
-                <Button loading={props.loading} icon='clean' intent='success' onClick={props.mintAndCreate}>Setup account</Button>
+                <Button icon='clean' intent='success' onClick={props.mintAndCreate}>Setup account</Button>
                 <Button icon='clean' intent='success' onClick={props.mintOnly}>Send to existing account</Button>
             </div>
         </Card>

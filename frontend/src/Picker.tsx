@@ -79,7 +79,7 @@ export default function Picker(props: PickerProps) {
   return (
     <div className="container">
         {
-          !props.sw.connected() ? <h2 className="warn-mssg">Please remember to connect your wallet to mint NFTs</h2> : <div className="content content-collection">{cards}</div>
+          !props.sw.connected() ? <h2 className="warn-mssg">Please connect your wallet to mint NFTs</h2> : <div className="content content-collection">{cards}</div>
         }
     </div>
   );

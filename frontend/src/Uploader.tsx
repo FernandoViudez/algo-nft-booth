@@ -17,6 +17,17 @@ export function Uploader(props: UploaderProps) {
     const [mediaSrc, setMediaSrc]       = React.useState<string>();
     const [mimeType, setMimeType]       = React.useState<string>();
     const [unitName, setUnitName]       = React.useState<string>();
+    const [assetName, setAssetName]     = React.useState<string>();
+    const form = {
+        unitName: {
+            set: setUnitName,
+            get: unitName
+        },
+        assetName: {
+            set: setAssetName,
+            get: assetName
+        },
+    }
 
     function setFile(file: File) {
         setFileObj(file)
@@ -64,7 +75,7 @@ export function Uploader(props: UploaderProps) {
 
         const md = new Metadata({
             ...meta,
-            name: `Trantorian ${process.env.REACT_APP_EVENT_NAME} POAP`,
+            name: assetName,
             unitName: unitName,
             description:`POAP Minted at ${process.env.REACT_APP_EVENT_NAME} ${new Date().getFullYear()}`,
             decimals: 0,
@@ -84,14 +95,15 @@ export function Uploader(props: UploaderProps) {
     }
 
     function onInputChange(event) {
-        setUnitName(event.target.value);
+        form[event.target.name].set(event.target.value);
     }
 
     return (
         <div className='container'>
             <Card elevation={Elevation.TWO} className='mint-card' >
                 <UploadContainer mediaTitle={title} mimeType={mimeType} mediaSrc={mediaSrc} setFile={setFile} {...meta} />
-                <input onChange={onInputChange} placeholder="Unit name"></input>
+                <input name='assetName' onChange={onInputChange} placeholder="Asset Name"></input>
+                <input name='unitName' onChange={onInputChange} placeholder="Unit name"></input>
                 <Button intent='success' style={{float:'right', margin:"15px"}} loading={loading} onClick={uploadMedia}>Upload</Button>
             </Card>
         </div>
