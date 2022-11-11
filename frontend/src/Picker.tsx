@@ -12,6 +12,7 @@ import {
 } from "./lib/ipfs";
 import { SessionWallet } from "algorand-session-wallet";
 import { MediaDisplay } from "./MediaDisplay";
+import { isTemplateLiteral } from "typescript";
 
 type PickerProps = {
   activeConfig: number;
@@ -20,7 +21,7 @@ type PickerProps = {
 
 // 2 hours
 const MAX_DELTA = 60 * 60 * 4 * 1000;
-
+let cards = [];
 
 export default function Picker(props: PickerProps) {
   const [options, setOptions] = React.useState([]);
@@ -72,14 +73,17 @@ export default function Picker(props: PickerProps) {
     })
   }, [props.activeConfig, initialized]);
 
-  const cards = initialized ? options.map((option) => {
-    return <DisplayCard key={option.cid} cidmd={option} />;
-  }) : [<h5 key='loading'>Loading...</h5>];
-
+  
+  if(initialized) {
+    cards = options.map((option) => {
+      return <DisplayCard key={option.cid} cidmd={option} />;
+    });
+  }
+  
   return (
     <div className="container">
         {
-          !props.sw.connected() ? <h2 className="warn-mssg">Please connect your wallet to mint NFTs</h2> : <div className="content content-collection">{cards}</div>
+          !props.sw.connected() ? <h2 className="warn-mssg">Please connect your wallet to mint NFTs</h2> : <div className="content content-collection">{!cards.length ? [<h5 key='loading'>Loading...</h5>] : cards}</div>
         }
     </div>
   );

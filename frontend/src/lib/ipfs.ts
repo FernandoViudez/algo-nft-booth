@@ -50,7 +50,10 @@ export async function listRecentFiles(activeConf: number, ms_threshold: number):
     const w3s = getStorageClient(activeConf)
     const options = []
     for await (const upload of w3s.list({ maxResults: 20 })) {
-        options.push(upload)
+        const itemCreatedAt = new Date(upload.created);
+        if (itemCreatedAt >= new Date(process.env.REACT_APP_SHOW_ITEMS_CREATED_AFTER) || !process.env.REACT_APP_SHOW_ITEMS_CREATED_AFTER) {
+            options.push(upload)
+        }
     }
     return options
 }
