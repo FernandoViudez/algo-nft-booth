@@ -1,4 +1,6 @@
-Front end for NFT Minting Booth
+Source code from Algorand foundation NFT-booth repository, modifications made by Indelve
+
+## Front end for NFT Minting Booth
 
 Setup is:
 1. Artists create and upload image + metadata to IPFS
@@ -11,7 +13,6 @@ If the user already has a funded mobile wallet account, we open a modal to let t
 If the user does _not_ already have a funded mobile wallet account, we create one and seed it and transfer the ASA then present a QR code to allow them to import the account it was sent to directly to their wallet.
 
 ## TODO
-
-Directions to rekey account if we create for them 
-
-Email or share to user
+- Send to NFT domain if client already has an account
+- Directions to rekey account if we create for them 
+- Email or share to user
